@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: report-service
+  main:
+    allow-bean-definition-overriding: true
+    lazy-initialization: true
+  datasource:
+    url: jdbc:h2:~/test
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+auth:
+  jwt:
+    issuer: enviro
+    secret: enviro_365_report_service
+    username: report_user
+    password: $2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6
+
