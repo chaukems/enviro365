@@ -5,17 +5,22 @@ spring:
     allow-bean-definition-overriding: true
     lazy-initialization: true
   datasource:
-    url: jdbc:h2:~/test
+    url: jdbc:h2:mem:enviro365db
     username: sa
     password: password
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization=true:
+
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
 
 auth:
   jwt:
     issuer: enviro
-    secret: enviro_365_report_service
-    username: report_user
+    secret: enviro365_com_reports_service_secured
+    username: enviro365
     password: $2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6
-

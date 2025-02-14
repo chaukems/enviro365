@@ -1,36 +1,61 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  - main
 
-#pool:
-#  vmImage: ubuntu-latest
-pool: MyPool
+pr:
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  sonarCloudServer: 'SonarQube'
+  sonarQubeToken: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - checkout: self
+    fetchDepth: 0
+  - task: Maven@4
+    inputs:
+      mavenPomFile: 'pom.xml'
+      options: 'clean install'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'verify'
+      testRunTitle: 'Junit Tests'
+      codeCoverageToolOption: 'JaCoCo'
+      mavenVersionOption: 'Default'
+      sonarQubeRunAnalysis: true
+      isJacocoCoverageReportXML: true
+      sqMavenPluginVersionChoice: 'latest'
+      checkStyleRunAnalysis: true
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: SonarCloudPrepare@1
+    displayName: 'Prepare analysis configuration'
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'sonarsource'
+      scannerMode: 'CLI'
+      configMode: 'file'
+      extraProperties: |
+        sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
+        sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
+        sonar.pullrequest.base=$(System.PullRequest.TargetBranch)
+        sonar.projectKey=TimbaronHoldings_sonar-validation-pipeline
+        sonar.coverage.jacoco.xmlReportPaths=CCReport43F6D5EF/jacoco.xml
+        sonar.projectName=sonar-validation-pipeline
+        sonar.projectVersion=1.0
+        sonar.sources=src/main/java
+        sonar.tests=src/test/java
+        sonar.java.binaries=target
+        sonar.qualitygate.wait=true
+        sonar.exclusions="**Configuration**"
 
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    testRunTitle: 'Junit Tests'
-    codeCoverageToolOption: 'JaCoCo'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: true
-    isJacocoCoverageReportXML: true
-    sqMavenPluginVersionChoice: 'latest'
-    checkStyleRunAnalysis: true
+  - task: SonarQubeAnalyze@5
+
+  - task: SonarQubePublish@5
+    inputs:
+      pollingTimeoutSec: '300'

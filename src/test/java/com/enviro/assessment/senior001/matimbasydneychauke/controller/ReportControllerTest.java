@@ -50,8 +50,7 @@ public class ReportControllerTest {
 
     @Test
     public void unauthorized_throws401() throws Exception {
-        System.out.println("mockMvc=" + mockMvc);
-        mockMvc.perform(get("/document-service/1234")
+        mockMvc.perform(get("/report-service/1234")
                         .accept(MediaType.APPLICATION_JSON)
                         .accept(objectMapper.writeValueAsString("")))
                 .andExpect(status().isUnauthorized());
@@ -59,10 +58,10 @@ public class ReportControllerTest {
 
     @Test
     public void execute_successfully() throws Exception {
-        mockMvc.perform(post("/document-service")
+        mockMvc.perform(post("/report-service")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", format("Bearer %s", generateToken()))
-                        .content(objectMapper.writeValueAsString("")))
+                        .content(objectMapper.writeValueAsString("{}")))
                 .andExpect(status().isOk());
     }
 

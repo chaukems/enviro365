@@ -9,16 +9,11 @@ import java.time.LocalDate;
 @Table
 @Data
 public class Report {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String reportName;
-
     private String reportType;
-
     private String description;
-
     private LocalDate createdDateTime;
 }

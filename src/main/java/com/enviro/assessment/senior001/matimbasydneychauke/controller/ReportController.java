@@ -32,13 +32,13 @@ public class ReportController {
                     {@Content(mediaType = "application/json", schema =
                     @Schema(implementation = Response.class))})})
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity saveReport(@RequestBody Report payload) throws Exception {
+    public ResponseEntity saveReport(@RequestBody String payload) throws Exception {
         Response response = Response.builder().
                 withData("Report saved successfully")
                 .withErrorCode(null)
                 .withResultCode("200")
                 .withResultMessage("Success").build();
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @Operation(summary = "Updates report", description = "Report must exist")
@@ -83,7 +83,7 @@ public class ReportController {
                 .withErrorCode(null)
                 .withResultCode("200")
                 .withResultMessage("Success").build();
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @Operation(summary = "Delete report", description = "Reports must exist")
