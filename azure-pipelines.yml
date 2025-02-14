@@ -7,8 +7,7 @@ pr:
     include:
       - '*'
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: MyPool
 
 variables:
   SonarCloud: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
