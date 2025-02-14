@@ -16,7 +16,7 @@ variables:
 steps:
   - checkout: self
     fetchDepth: 0
-  - task: Maven@4
+  - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
       options: 'clean install'
