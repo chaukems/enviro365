@@ -1,5 +1,6 @@
 trigger:
   - main
+  - feature/*
 
 pr:
   branches:
@@ -11,6 +12,7 @@ pool:
 
 variables:
   SonarCloud: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
+  SonarOrg: 'timbaronholdings'
 
 steps:
   - checkout: self
@@ -35,10 +37,9 @@ steps:
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis configuration'
     inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'sonarsource'
-      scannerMode: 'CLI'
-      configMode: 'file'
+      SonarCloud: 'https://sonarcloud.io/'
+      organization: 'timbaronholdings'
+      scannerMode: 'Other'
       extraProperties: |
         sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
         sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
