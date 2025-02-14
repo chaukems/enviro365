@@ -37,9 +37,9 @@ steps:
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis configuration'
     inputs:
-      SonarCloud: 'https://sonarcloud.io/'
+      SonarCloud: 'SonarQube Cloud'
       organization: 'timbaronholdings'
-      scannerMode: 'Other'
+      scannerMode: 'other'
       extraProperties: |
         sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
         sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
