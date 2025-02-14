@@ -10,8 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  sonarCloudServer: 'SonarQube'
-  sonarQubeToken: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
+  SonarCloud: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
 
 steps:
   - checkout: self
