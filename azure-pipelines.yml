@@ -23,8 +23,8 @@ steps:
     inputs:
       mavenPomFile: 'pom.xml'
       options: 'clean install'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
+      javaHomeOption: 'JAVA_HOME'
+      jdkVersionOption: '1.22'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'verify'
