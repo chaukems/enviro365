@@ -14,18 +14,12 @@ variables:
   SonarOrg: 'timbaronholdings'
 
 steps:
-  - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '11'
-      jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'PreInstalled'
-
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
       options: 'clean install'
       javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
+      jdkVersionOption: '1.22'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'verify'
