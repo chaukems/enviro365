@@ -21,7 +21,7 @@ steps:
 
   - task: SonarQubePrepare@5
     inputs:
-      SonarQube: '$(sonarQubeServer)'
+      SonarCloud: '$(sonarQubeServer)'
       scannerMode: 'other'
       configMode: 'file'
       configFile: 'sonar-project.properties'
