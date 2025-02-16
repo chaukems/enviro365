@@ -27,7 +27,7 @@ steps:
       codeCoverageToolOption: 'JaCoCo'
       mavenVersionOption: 'Default'
       sonarQubeRunAnalysis: true
-      isJacocoCoverageReportXML: true
+      isJacocoCoverageReportXML: false
       sqMavenPluginVersionChoice: 'latest'
       checkStyleRunAnalysis: true
 
