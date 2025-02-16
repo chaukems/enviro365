@@ -14,11 +14,6 @@ variables:
   SonarOrg: 'timbaronholdings'
 
 steps:
-  - script: |
-      echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_22_X64)"
-      echo "##vso[task.setvariable variable=PATH]$(JAVA_HOME_22_X64)/bin:$(PATH)"
-    displayName: "Set java version"
-
   - task: Maven@4
     inputs:
       mavenPomFile: 'pom.xml'
