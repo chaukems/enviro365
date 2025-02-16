@@ -24,10 +24,10 @@ steps:
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'verify'
       testRunTitle: 'Junit Tests'
-      codeCoverageToolOption: 'JaCoCo'
+      #codeCoverageToolOption: 'JaCoCo'
       mavenVersionOption: 'Default'
       sonarQubeRunAnalysis: true
-      isJacocoCoverageReportXML: false
+      #isJacocoCoverageReportXML: false
       sqMavenPluginVersionChoice: 'latest'
       checkStyleRunAnalysis: true
 
