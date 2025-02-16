@@ -1,30 +1,55 @@
 trigger:
   - main
+  - feature/*
+
+pr:
+  branches:
+    include:
+      - '*'
 
 pool: MyPool
 
 variables:
-  sonarQubeServer: 'SonarQube Cloud'
-  sonarQubeToken: '$(SONARQUBE_TOKEN)'
+  SonarCloud: 'a6354dba64795f8e71e899f9b94e8c4310a14502'
+  SonarOrg: 'timbaronholdings'
 
 steps:
-  - task: Maven@3
+  - task: Maven@4
     inputs:
       mavenPomFile: 'pom.xml'
       options: 'clean install'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
+      javaHomeOption: 'Path'
+      jdkDirectory: '/Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'verify'
+      testRunTitle: 'Junit Tests'
+      codeCoverageToolOption: 'JaCoCo'
+      mavenVersionOption: 'Default'
+      sonarQubeRunAnalysis: true
+      isJacocoCoverageReportXML: true
+      sqMavenPluginVersionChoice: 'latest'
+      checkStyleRunAnalysis: true
 
-  - task: SonarQubePrepare@5
+  - task: SonarCloudPrepare@1
+    displayName: 'Prepare analysis configuration'
     inputs:
-      SonarCloud: '$(sonarQubeServer)'
+      SonarCloud: 'SonarQube Cloud'
+      organization: 'timbaronholdings'
       scannerMode: 'other'
-      configMode: 'file'
-      configFile: 'sonar-project.properties'
-
+      extraProperties: |
+        sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
+        sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
+        sonar.pullrequest.base=$(System.PullRequest.TargetBranch)
+        sonar.projectKey=TimbaronHoldings_sonar-validation-pipeline
+        sonar.coverage.jacoco.xmlReportPaths=CCReport43F6D5EF/jacoco.xml
+        sonar.projectName=sonar-validation-pipeline
+        sonar.projectVersion=1.0
+        sonar.sources=src/main/java
+        sonar.tests=src/test/java
+        sonar.java.binaries=target
+        sonar.qualitygate.wait=true
+        sonar.exclusions="**Configuration**"
 
   - task: SonarQubeAnalyze@5
 
