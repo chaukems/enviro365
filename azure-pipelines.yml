@@ -20,7 +20,7 @@ steps:
       options: 'clean install'
       javaHomeOption: 'Path'
       jdkDirectory: '/Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home'
-      publishJUnitResults: true
+      publishJUnitResults: false
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'verify'
       testRunTitle: 'Junit Tests'
