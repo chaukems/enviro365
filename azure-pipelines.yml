@@ -1,6 +1,11 @@
 trigger:
   - main
-  - feature/*
+  # - feature/*
+
+pr:
+  branches:
+    include:
+      - '*'
 
 pool: MyPool
 
@@ -52,7 +57,9 @@ steps:
       checkStyleRunAnalysis: true
 
   - task: SonarQubeAnalyze@5
+    condition: succeeded()
 
   - task: SonarQubePublish@5
+    condition: succeeded()
     inputs:
       pollingTimeoutSec: '300'
