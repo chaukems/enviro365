@@ -2,11 +2,6 @@ trigger:
   - main
   - feature/*
 
-pr:
-  branches:
-    include:
-      - '*'
-
 pool: MyPool
 
 variables:
@@ -24,7 +19,6 @@ steps:
       organization: 'timbaronholdings'
       scannerMode: 'Other'
       extraProperties: |
-        sonar.branch.name=$(Build.SourceBranchName)
         sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
         sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
         sonar.pullrequest.base=$(System.PullRequest.TargetBranch)
