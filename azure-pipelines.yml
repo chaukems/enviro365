@@ -14,23 +14,6 @@ variables:
   SonarOrg: 'timbaronholdings'
 
 steps:
-  - task: Maven@4
-    inputs:
-      mavenPomFile: 'pom.xml'
-      options: 'clean install'
-      javaHomeOption: 'Path'
-      jdkDirectory: '/Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home'
-      publishJUnitResults: false
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'verify'
-      testRunTitle: 'Junit Tests'
-      #codeCoverageToolOption: 'JaCoCo'
-      mavenVersionOption: 'Default'
-      #sonarQubeRunAnalysis: true
-      #isJacocoCoverageReportXML: false
-      sqMavenPluginVersionChoice: 'latest'
-      checkStyleRunAnalysis: true
-
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis configuration'
     inputs:
@@ -46,11 +29,29 @@ steps:
         sonar.projectName=sonar-validation-pipeline
         sonar.projectVersion=1.0
         sonar.verbose=true
+        sonar.token=a6354dba64795f8e71e899f9b94e8c4310a14502
         sonar.sources=src/main/java
         sonar.tests=src/test/java
         sonar.java.binaries=target
         sonar.qualitygate.wait=true
         sonar.exclusions="**Configuration**"
+
+  - task: Maven@4
+    inputs:
+      mavenPomFile: 'pom.xml'
+      options: 'clean install'
+      javaHomeOption: 'Path'
+      jdkDirectory: '/Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home'
+      publishJUnitResults: false
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'verify'
+      testRunTitle: 'Junit Tests'
+      #codeCoverageToolOption: 'JaCoCo'
+      mavenVersionOption: 'Default'
+      sonarQubeRunAnalysis: true
+      #isJacocoCoverageReportXML: false
+      sqMavenPluginVersionChoice: 'latest'
+      checkStyleRunAnalysis: true
 
   - task: SonarQubeAnalyze@5
 
