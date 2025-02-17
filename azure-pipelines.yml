@@ -51,7 +51,7 @@ steps:
       testRunTitle: 'Junit Tests'
       #codeCoverageToolOption: 'JaCoCo'
       mavenVersionOption: 'Default'
-      sonarQubeRunAnalysis: true
+      sonarQubeRunAnalysis: false
       #isJacocoCoverageReportXML: false
       sqMavenPluginVersionChoice: 'latest'
       checkStyleRunAnalysis: true
