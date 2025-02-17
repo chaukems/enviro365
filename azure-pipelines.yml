@@ -14,6 +14,9 @@ variables:
   SonarOrg: 'timbaronholdings'
 
 steps:
+  - checkout: self
+    fetchDepth: 0
+
   - task: SonarCloudPrepare@1
     displayName: 'Prepare analysis configuration'
     inputs:
@@ -21,6 +24,7 @@ steps:
       organization: 'timbaronholdings'
       scannerMode: 'Other'
       extraProperties: |
+        sonar.branch.name=$(Build.SourceBranchName)
         sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
         sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
         sonar.pullrequest.base=$(System.PullRequest.TargetBranch)
